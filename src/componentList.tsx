@@ -7,6 +7,8 @@ import { KeyboardCounterDependency } from "./components/KeyboardCounterDependenc
 import { KeyboardCounterRef } from "./components/KeyboardCounterRef.tsx";
 import { KeyboardCounterFunctional } from "./components/KeyboardCounterFunctional.tsx";
 import { KeyboardCounterEffectEvent } from "./components/KeyboardCounterEffectEvent.tsx";
+import { ExampleWithServer } from "./components/ExampleWithServer.tsx";
+import { ExampleWithServerFixed } from "./components/ExampleWithServerFixed.tsx";
 
 export type DemoComponentData = {
     label: string;
@@ -15,9 +17,9 @@ export type DemoComponentData = {
 }
 export type DemoKey = keyof typeof demoComponents;
 
-export const demoComponents: Record<string, DemoComponentData> = {
-    SimpleButtonCounter: {
-        label: 'SimpleButtonCounter',
+export const demoComponents: DemoComponentData[] = [
+    {
+        label: 'Simple Button Counter',
         element: <SimpleButtonCounter/>,
         code: `import '../App.css'
 import { useState } from 'react';
@@ -43,8 +45,8 @@ export const SimpleButtonCounter: React.FC = () => {
     );
 };`
     },
-    SimpleKeyboardCounter: {
-        label: 'SimpleKeyboardCounter',
+    {
+        label: 'Simple Keyboard Counter',
         element: <SimpleKeyboardCounter/>,
         code: `import '../App.css'
 import { useEffect, useState } from 'react';
@@ -81,8 +83,8 @@ export const SimpleKeyboardCounter: React.FC = () => {
     );
 };`
     },
-    KeyboardCounterDependency: {
-        label: 'KeyboardCounterDependency',
+    {
+        label: 'Keyboard Counter Dependency',
         element: <KeyboardCounterDependency/>,
         code: `import '../App.css'
 import { useEffect, useState } from 'react';
@@ -119,8 +121,46 @@ export const KeyboardCounterDependency: React.FC = () => {
     );
 };`
     },
-    KeyboardCounterRef: {
-        label: 'KeyboardCounterRef',
+    {
+        label: 'Keyboard Counter Functional',
+        element: <KeyboardCounterFunctional/>,
+        code: `import '../App.css'
+import { useEffect, useState } from 'react';
+
+export const KeyboardCounterFunctional: React.FC = () => {
+    const [count, setCount] = useState<number>(0);
+
+    const onKeyDown = (key: string) => {
+        if (key === 'ArrowRight') {
+            setCount(prev => prev + 1);
+        } else if (key === 'ArrowLeft') {
+            setCount(prev => prev - 1);
+        }
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            onKeyDown(event.key);
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+    
+
+    return (
+        <div>
+            <div className="card-header">
+                <h2>Keyboard Counter - Functional Update</h2>
+            </div>
+            <p>Count value: {count}</p>
+            <p>Use left/right arrow keys to increment/decrement</p>
+        </div>
+    );
+};`
+    },
+    {
+        label: 'Keyboard Counter Ref',
         element: <KeyboardCounterRef/>,
         code: `import '../App.css'
 import { useEffect, useRef, useState } from 'react';
@@ -162,46 +202,8 @@ export const KeyboardCounterRef: React.FC = () => {
     );
 };`
     },
-    KeyboardCounterFunctional: {
-        label: 'KeyboardCounterFunctional',
-        element: <KeyboardCounterFunctional/>,
-        code: `import '../App.css'
-import { useEffect, useState } from 'react';
-
-export const KeyboardCounterFunctional: React.FC = () => {
-    const [count, setCount] = useState<number>(0);
-
-    const onKeyDown = (key: string) => {
-        if (key === 'ArrowRight') {
-            setCount(prev => prev + 1);
-        } else if (key === 'ArrowLeft') {
-            setCount(prev => prev - 1);
-        }
-    };
-
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            onKeyDown(event.key);
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [count]);
-    
-
-    return (
-        <div>
-            <div className="card-header">
-                <h2>Keyboard Counter - Functional Update</h2>
-            </div>
-            <p>Count value: {count}</p>
-            <p>Use left/right arrow keys to increment/decrement</p>
-        </div>
-    );
-};`
-    },
-    KeyboardCounterEffectEvent: {
-        label: 'KeyboardCounterEffectEvent',
+    {
+        label: 'Keyboard Counter EffectEvent',
         element: <KeyboardCounterEffectEvent/>,
         code: `import '../App.css'
 import { useEffect, useEffectEvent, useState } from 'react';
@@ -237,5 +239,91 @@ export const KeyboardCounterEffectEvent: React.FC = () => {
         </div>
     );
 };`
+    },
+    {
+        label: 'Example With Server',
+        element: <ExampleWithServer/>,
+        code: `import { useState } from 'react';
+
+type ErrorStatus = {
+    isError: boolean;
+    message: string;
+};
+type ProgressHandler = (progress: number) => void;
+type ErrorHandler = (message: string) => void;
+
+const runMutation = async (progressHandler: ProgressHandler, errorHandler: ErrorHandler) => {
+    ...
+}
+
+export const ExampleWithServer: React.FC = () => {
+    const [count, setCount] = useState<number>(0);
+    const [error, setError] = useState<ErrorStatus>({ isError: false, message: '' });
+
+    const updateProgress = (progress: number) => {
+        if (!error.isError) {
+            setCount(progress);
+        }
+    };
+
+    const handleError = (message: string) => {
+        setError({ isError: true, message });
+    };
+
+    return (
+            ...
+                <button onClick={() => {
+                    setError({ isError: false, message: '' });
+                    void runMutation(updateProgress, handleError);
+                }}>Call Server</button>
+            ...
+    );
+};`
+    },
+    {
+        label: 'Example With Server Fixed',
+        element: <ExampleWithServerFixed/>,
+        code: `import { useEffect, useRef, useState } from 'react';
+
+type ErrorStatus = {
+    isError: boolean;
+    message: string;
+};
+type ProgressHandler = (progress: number) => void;
+type ErrorHandler = (message: string) => void;
+
+const runMutation = async (progressHandler: ProgressHandler, errorHandler: ErrorHandler) => {
+    ...
+}
+
+export const ExampleWithServerFixed: React.FC = () => {
+    const [count, setCount] = useState<number>(0);
+    const [error, setError] = useState<ErrorStatus>({ isError: false, message: '' });
+    const errorRef = useRef<ErrorStatus>(error);
+
+    useEffect(() => {
+        errorRef.current = error;
+    }, [error])
+
+
+    const updateProgress = (progress: number) => {
+        if (!errorRef.current.isError) {
+            setCount(progress);
+        }
+    };
+
+    const handleError = (message: string) => {
+        setError({ isError: true, message });
+    };
+
+    return (
+        ...
+                <button onClick={() => {
+                    setError({ isError: false, message: '' });
+                    void runMutation(updateProgress, handleError);
+                }}>Call Server</button>
+        ...
+    );
+};`
     }
-} as const;
+] as const;

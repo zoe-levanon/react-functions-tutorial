@@ -1,20 +1,17 @@
 import '../App.css'
 import { useEffect, useState } from 'react';
 
-export const KeyboardCounterFunctional: React.FC = () => {
+export const ComplexExample: React.FC = () => {
     const [count, setCount] = useState<number>(0);
 
-    const onKeyDown = (key: string) => {
-        if (key === 'ArrowRight') {
-            setCount(prev => prev + 1);
-        } else if (key === 'ArrowLeft') {
-            setCount(prev => prev - 1);
-        }
+    const printKey = (key: string) => {
+        console.log(key);
     };
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            onKeyDown(event.key);
+            printKey(event.key);
+            setCount(prev => prev + 1);
         };
 
         window.addEventListener('keydown', handleKeyDown);

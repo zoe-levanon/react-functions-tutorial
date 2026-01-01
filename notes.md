@@ -11,4 +11,8 @@ Fixes:
    1. First, it's probably often/most times a good idea to use prev
    2. Note that is specific to this problem. If we have console.log, it wouldn't have helped us
       1. Actually, we could've added the console.log inside the prev update function, but that seems like poor coding
-4. React 19 - useEffectEvent
+4. React 19 - useEffectEvent:
+   1. Experimental
+   2. Only use for non-reactive logic (i.e., if you want to re-run the useEffect, you still need the dependency)
+   3. Non-reactive logic = logic that should always see the latest values, but should not cause the effect to re-run when those values change.
+   4. If a value is only used inside an Effect Event, it must NOT be in the dependency array.

@@ -39,10 +39,13 @@ function highlightTsLike(input: string): string {
   // 6) Function names (simple heuristic: name followed by paren)
   code = code.replace(/\b([A-Za-z_][A-Za-z0-9_]*)\s*(?=\()/g, (m) => `<span clazz="tok-fn">${m}</span>`);
 
-  // 7) Since we used clazz instead of class for spans (to avoid identifying them as keywords), fix it now.
+  // 7) JSX tags and attributes (very rough, post-escape so we match &lt; and &gt;)
+  // Highlight tag names: &lt;Tag ...&gt; and &lt;/Tag&gt;
+  code = code.replace(/(&lt;\/?)([A-Za-z][A-Za-z0-9_]*)/g, (_m, p1, p2) => `${p1}<span clazz="tok-jsx-tag">${p2}</span>`);
+
+  // 8) Since we used clazz instead of class for spans (to avoid identifying them as keywords), fix it now.
   code = code.replace(/clazz/g, 'class');
   code = code.replace(/tok-ztring/g, 'tok-string');
-
 
   return code;
 }

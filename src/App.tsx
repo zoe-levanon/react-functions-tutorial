@@ -4,11 +4,11 @@ import { CodeViewer } from "./components/CodeViewer.tsx";
 import { demoComponents, type DemoKey } from "./componentList.tsx";
 
 function App() {
-    const [selected, setSelected] = useState<DemoKey>('SimpleButtonCounter');
+    const [selected, setSelected] = useState<DemoKey>(demoComponents[0].label as DemoKey);
 
-    const SelectedComponent = useMemo(() => demoComponents[selected].element, [selected]);
-    const code = useMemo(() => demoComponents[selected].code, [selected]);
-    const codeTitle = useMemo(() => `${selected}.tsx`, [selected]);
+    const selectedComponent = demoComponents.find(c => c.label === selected)!;
+    const code = useMemo(() => selectedComponent.code, [selectedComponent.code]);
+    const codeTitle = useMemo(() => `${String(selected)}.tsx`, [selected]);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -33,25 +33,26 @@ function App() {
                     }}
                 >
                     <div style={{ fontWeight: 600, marginBottom: 8 }}>Components</div>
-                    {Object.keys(demoComponents).map((key) => {
-                        const k = key as DemoKey;
-                        const active = selected === k;
+                    {demoComponents.map((component) => {
+                        const active = selected === component.label;
                         return (
                             <button
-                                key={k}
-                                onClick={() => setSelected(k)}
+                                key={component.label}
+                                onClick={() => setSelected(component.label as DemoKey)}
                                 style={{
-                                    textAlign: 'left',
+                                    justifyContent: 'left',
+                                    width: '100%',
                                     padding: '10px 12px',
                                     borderRadius: 8,
                                     border: active ? '1px solid #2563eb' : '1px solid #e5e7eb',
-                                    background: active ? '#dbeafe' : '#ffffff',
+                                    background: active ? '#8da6bf' : '#ffffff',
                                     color: '#111827',
                                     cursor: 'pointer',
                                     outline: 'none',
+                                    textAlign: 'left',
                                 }}
                             >
-                                {demoComponents[k].label}
+                                {component.label}
                             </button>
                         );
                     })}
@@ -62,7 +63,7 @@ function App() {
                     <div className="main-split">
                         <div className="preview-pane">
                             <div className="card" style={{ width: '100%', height: '100%', maxWidth: 800, minHeight: 300 }}>
-                                {SelectedComponent}
+                                {selectedComponent.element}
                             </div>
                         </div>
                         <div className="code-pane">
