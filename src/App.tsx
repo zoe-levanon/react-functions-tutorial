@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import './App.css'
 import { CodeViewer } from "./components/CodeViewer.tsx";
 import { demoComponents, type DemoKey } from "./componentList.tsx";
+import { SlideNotes } from "./components/SlideNotes.tsx";
 
 function App() {
     const [selected, setSelected] = useState<DemoKey>(demoComponents[0].label as DemoKey);
@@ -9,6 +10,7 @@ function App() {
     const selectedComponent = demoComponents.find(c => c.label === selected)!;
     const code = useMemo(() => selectedComponent.code, [selectedComponent.code]);
     const codeTitle = useMemo(() => `${String(selected)}.tsx`, [selected]);
+    const [flipped, setFlipped] = useState(false);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -38,7 +40,10 @@ function App() {
                         return (
                             <button
                                 key={component.label}
-                                onClick={() => setSelected(component.label as DemoKey)}
+                                onClick={() => {
+                                    setSelected(component.label as DemoKey);
+                                    setFlipped(false);
+                                }}
                                 style={{
                                     justifyContent: 'left',
                                     width: '100%',
@@ -64,6 +69,9 @@ function App() {
                         <div className="preview-pane">
                             <div className="card" style={{ width: '100%', height: '100%', maxWidth: 800, minHeight: 300 }}>
                                 {selectedComponent.element}
+                            </div>
+                            <div style={{ marginTop: 12 }}>
+                                <SlideNotes points={selectedComponent.notes} flipped={flipped} onFlip={() => setFlipped(!flipped)}/>
                             </div>
                         </div>
                         <div className="code-pane">

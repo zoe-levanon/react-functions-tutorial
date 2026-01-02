@@ -19,7 +19,7 @@ export const KeyboardCounterDependency: React.FC = () => {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [count]);
+    }, [onKeyDown]);
     
 
     return (

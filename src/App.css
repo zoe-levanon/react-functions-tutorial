@@ -7,6 +7,7 @@
   border: 1px solid aliceblue;
   background-color: #00000020;
   border-radius: 10px;
+  max-height: 30vh;
 }
 
 .card-header {
@@ -30,6 +31,9 @@
   flex: 0 1 0;
   min-width: 320px;
   width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .code-pane {
@@ -234,4 +238,128 @@ button[aria-disabled="true"],
 }
 .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.06);
+}
+
+
+/* SlideNotes flip card styles */
+.slide-notes {
+  perspective: 1000px;
+  width: 100%;
+}
+
+.flip-card {
+  position: relative;
+  flex: 1;
+  min-height: 400px;
+  height: 400px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.flip-card-front {
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flip-card-back {
+  background: #ffffff;
+  transform: rotateY(180deg);
+}
+
+.notes-front {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #334155;
+}
+
+.notes-badge {
+  font-weight: 700;
+  font-size: 18px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: #0f172a;
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+}
+
+.notes-hint {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.notes-back {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 14px 18px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.notes-title {
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  color: #334155;
+  text-transform: uppercase;
+}
+
+.notes-list {
+  margin: 10px 0 0 22px;
+  padding: 0 8px 0 0;
+  overflow: auto;
+  flex: 1 1 auto;
+  list-style: disc;
+  list-style-position: outside;
+}
+
+.notes-item {
+  margin: 8px 0;
+  line-height: 1.6;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+/* Subtle separators between items without removing bullets */
+.notes-item + .notes-item {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 8px;
+}
+
+.notes-footer {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #64748b;
+  text-align: center;
 }

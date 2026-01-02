@@ -1,5 +1,7 @@
 // List of demo components to show in the right-hand main area
 // Key is used for selection; label is shown in the left menu
+// noinspection JSUnresolvedReference
+
 import { SimpleButtonCounter } from "./components/SimpleButtonCounter.tsx";
 import { SimpleKeyboardCounter } from "./components/SimpleKeyboardCounter.tsx";
 import type { JSX } from "react";
@@ -14,6 +16,7 @@ export type DemoComponentData = {
     label: string;
     element: JSX.Element;
     code?: string;
+    notes?: string;
 }
 export type DemoKey = keyof typeof demoComponents;
 
@@ -48,6 +51,7 @@ export const SimpleButtonCounter: React.FC = () => {
     {
         label: 'Simple Keyboard Counter',
         element: <SimpleKeyboardCounter/>,
+        notes: 'The first render registers the "keydown" event\nIt closes around the first instance of onKeyDown\nWhen count changes, onKeyDown is rendered again, but handleKeyDown still calls the old value',
         code: `import '../App.css'
 import { useEffect, useState } from 'react';
 
@@ -86,6 +90,7 @@ export const SimpleKeyboardCounter: React.FC = () => {
     {
         label: 'Keyboard Counter Dependency',
         element: <KeyboardCounterDependency/>,
+        notes: 'We added a dependency on onKeyDown to ensure that the handleKeyDown function is always up-to-date.\nPro: it works\nCon: we still have a warning\nCon: the event is removed and added every render',
         code: `import '../App.css'
 import { useEffect, useState } from 'react';
 
@@ -107,7 +112,7 @@ export const KeyboardCounterDependency: React.FC = () => {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [count]);
+    }, [onKeyDown]);
     
 
     return (
@@ -124,6 +129,7 @@ export const KeyboardCounterDependency: React.FC = () => {
     {
         label: 'Keyboard Counter Functional',
         element: <KeyboardCounterFunctional/>,
+        notes: 'Using the functional update is often the safer option (but might not be our "to-go" option)\nSpecific to our issue of "useState", wouldn\'t have worked with console.log\nUnless we put the console.log inside the function',
         code: `import '../App.css'
 import { useEffect, useState } from 'react';
 
@@ -162,6 +168,7 @@ export const KeyboardCounterFunctional: React.FC = () => {
     {
         label: 'Keyboard Counter Ref',
         element: <KeyboardCounterRef/>,
+        notes: 'This is the \'textbook\' solution\nRefs don\'t re-render, so we need another variable\nWe can\'t just init the ref variable everytime',
         code: `import '../App.css'
 import { useEffect, useRef, useState } from 'react';
 
@@ -205,6 +212,7 @@ export const KeyboardCounterRef: React.FC = () => {
     {
         label: 'Keyboard Counter EffectEvent',
         element: <KeyboardCounterEffectEvent/>,
+        notes: 'This is experimental (React 19.2 and newer)\nOnly use for non-reactive logic (that needs to see the latest value)\nValues in it shouldn\'t appear in the dependency array',
         code: `import '../App.css'
 import { useEffect, useEffectEvent, useState } from 'react';
 
@@ -243,6 +251,7 @@ export const KeyboardCounterEffectEvent: React.FC = () => {
     {
         label: 'Example With Server',
         element: <ExampleWithServer/>,
+        notes: 'We call a mutation, with a progressHandler and errorHandler\nWe only update the progress if we\'re not in error\nThe mutation fails on odd runs\nThis fails, but there\'s NO WARNING like we had in the keyboard example',
         code: `import { useState } from 'react';
 
 type ErrorStatus = {
