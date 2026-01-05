@@ -38,8 +38,8 @@
 
 .code-pane {
   flex: 1;
-  min-width: 900px;
-  width: 900px;
+  min-width: 750px;
+  width: 750px;
 }
 
 /* Code panel visuals */
@@ -98,7 +98,7 @@
   color: #475569;
   padding: 12px 8px;
   text-align: right;
-  min-width: 44px;
+  min-width: 32px;
   border-right: 1px solid #1f2937;
 }
 

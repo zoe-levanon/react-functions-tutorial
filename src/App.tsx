@@ -24,7 +24,7 @@ function App() {
                 {/* Sidebar */}
                 <aside
                     style={{
-                        width: 360,
+                        width: 320,
                         maxHeight: 'calc(100vh - 100px)',
                         borderRight: '1px solid #e5e7eb',
                         padding: 16,
