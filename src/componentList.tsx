@@ -14,6 +14,7 @@ import { ExampleWithServerFixed } from "./components/ExampleWithServerFixed.tsx"
 
 export type DemoComponentData = {
     label: string;
+    title: string;
     element: JSX.Element;
     code?: string;
     notes?: string;
@@ -22,6 +23,7 @@ export type DemoKey = keyof typeof demoComponents;
 
 export const demoComponents: DemoComponentData[] = [
     {
+        title: 'Let\'s start with a simple example',
         label: 'Simple Button Counter',
         element: <SimpleButtonCounter/>,
         code: `import '../App.css'
@@ -49,6 +51,7 @@ export const SimpleButtonCounter: React.FC = () => {
 };`
     },
     {
+        title: 'A version that uses keyboard - we encounter a problem',
         label: 'Simple Keyboard Counter',
         element: <SimpleKeyboardCounter/>,
         notes: 'The first render registers the "keydown" event\nIt closes around the first instance of onKeyDown\nWhen count changes, onKeyDown is rendered again, but handleKeyDown still calls the old value',
@@ -88,6 +91,7 @@ export const SimpleKeyboardCounter: React.FC = () => {
 };`
     },
     {
+        title: 'Solution 1 (of 4) - add a dependency',
         label: 'Keyboard Counter Dependency',
         element: <KeyboardCounterDependency/>,
         notes: 'We added a dependency on onKeyDown to ensure that the handleKeyDown function is always up-to-date.\nPro: it works\nCon: we still have a warning\nCon: the event is removed and added every render',
@@ -127,6 +131,7 @@ export const KeyboardCounterDependency: React.FC = () => {
 };`
     },
     {
+        title: 'Solution 2 (of 4) - use a functional update',
         label: 'Keyboard Counter Functional',
         element: <KeyboardCounterFunctional/>,
         notes: 'Using the functional update is often the safer option (but might not be our "to-go" option)\nSpecific to our issue of "useState", wouldn\'t have worked with console.log\nUnless we put the console.log inside the function',
@@ -166,6 +171,7 @@ export const KeyboardCounterFunctional: React.FC = () => {
 };`
     },
     {
+        title: 'Solution 3 (of 4) - use ref',
         label: 'Keyboard Counter Ref',
         element: <KeyboardCounterRef/>,
         notes: 'This is the \'textbook\' solution\nRefs don\'t re-render, so we need another variable\nWe can\'t just init the ref variable everytime',
@@ -210,6 +216,7 @@ export const KeyboardCounterRef: React.FC = () => {
 };`
     },
     {
+        title: 'Solution 4 (of 4) - EXPERIMENTAL - useEffectEvent',
         label: 'Keyboard Counter EffectEvent',
         element: <KeyboardCounterEffectEvent/>,
         notes: 'This is experimental (React 19.2 and newer)\nOnly use for non-reactive logic (that needs to see the latest value)\nValues in it shouldn\'t appear in the dependency array',
@@ -249,6 +256,7 @@ export const KeyboardCounterEffectEvent: React.FC = () => {
 };`
     },
     {
+        title: 'A more complex example - no warning in the IDE',
         label: 'Example With Server',
         element: <ExampleWithServer/>,
         notes: 'We call a mutation, with a progressHandler and errorHandler\nWe only update the progress if we\'re not in error\nThe mutation fails on odd runs\nThis fails, but there\'s NO WARNING like we had in the keyboard example',
@@ -290,6 +298,7 @@ export const ExampleWithServer: React.FC = () => {
 };`
     },
     {
+        title: 'A more complex example - fixed using ref',
         label: 'Example With Server Fixed',
         element: <ExampleWithServerFixed/>,
         code: `import { useEffect, useRef, useState } from 'react';
