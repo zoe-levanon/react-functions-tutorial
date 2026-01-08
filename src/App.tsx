@@ -15,13 +15,13 @@ function App() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             {/* Header */}
-            <div style={{ width: '100%', display: 'flex', marginLeft: "1rem", marginBottom: "0.5rem" }}>
+            <div style={{ width: '100%', display: 'flex', marginLeft: "1rem", marginBottom: 0, marginTop: 0 }}>
                 <h1 style={{ margin: 0 }}>You Can't Avoid Closure...</h1>
             </div>
 
             {/* Content: Sidebar + Main */}
             <div style={{ width: '100%', display: 'flex', marginLeft: "1.5rem", marginBottom: "0.5rem" }}>
-                <h3>{selectedComponent.title}</h3>
+                <h3 style={{ margin: 0 }}>{selectedComponent.title}</h3>
             </div>
             <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
                 {/* Sidebar */}

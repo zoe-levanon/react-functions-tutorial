@@ -1,5 +1,5 @@
 #root {
-  padding-top: 2rem;
+  padding-top: 0.5rem;
   text-align: center;
 }
 
@@ -38,8 +38,9 @@
 
 .code-pane {
   flex: 1;
-  min-width: 750px;
-  width: 750px;
+  min-width: 700px;
+  width: 700px;
+  max-height: 700px;
 }
 
 /* Code panel visuals */
@@ -250,8 +251,8 @@ button[aria-disabled="true"],
 .flip-card {
   position: relative;
   flex: 1;
-  min-height: 400px;
-  height: 400px;
+  min-height: 350px;
+  height: 350px;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
