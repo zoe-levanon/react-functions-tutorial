@@ -19,7 +19,6 @@ export type DemoComponentData = {
     code?: string;
     notes?: string;
 }
-export type DemoKey = keyof typeof demoComponents;
 
 export const demoComponents: DemoComponentData[] = [
     {

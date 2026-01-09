@@ -25,7 +25,7 @@ export const KeyboardCounterEffectEvent: React.FC = () => {
     return (
         <div>
             <div className="card-header">
-                <h2>Keyboard Counter - useEffectEvent</h2>
+                <h2>Keyboard Counter - <a href="https://react.dev/reference/react/useEffectEvent" target={"_blank"}>useEffectEvent</a></h2>
             </div>
             <p>Count value: {count}</p>
             <p>Use left/right arrow keys to increment/decrement</p>
