@@ -133,7 +133,7 @@ export const KeyboardCounterDependency: React.FC = () => {
         title: 'Solution 2 (of 4) - use a functional update',
         label: 'Keyboard Counter Functional',
         element: <KeyboardCounterFunctional/>,
-        notes: 'Using the functional update is often the safer option (but might not be our "to-go" option)\nSpecific to our issue of "useState", wouldn\'t have worked with console.log\nUnless we put the console.log inside the function',
+        notes: 'Using the functional update is often the safer option (but might not be our "to-go" option)\nSpecific to our issue of "useState", wouldn\'t have worked with console.log\n(unless we put the console.log inside the function)',
         code: `import '../App.css'
 import { useEffect, useState } from 'react';
 
@@ -173,7 +173,7 @@ export const KeyboardCounterFunctional: React.FC = () => {
         title: 'Solution 3 (of 4) - use ref',
         label: 'Keyboard Counter Ref',
         element: <KeyboardCounterRef/>,
-        notes: 'This is the \'textbook\' solution\nRefs don\'t re-render, so we need another variable\nWe can\'t just init the ref variable everytime',
+        notes: 'This is the \'textbook\' solution\nRefs don\'t re-render, so we need another variable\nNote: ref values must be set inside an effect block',
         code: `import '../App.css'
 import { useEffect, useRef, useState } from 'react';
 
@@ -218,7 +218,7 @@ export const KeyboardCounterRef: React.FC = () => {
         title: 'Solution 4 (of 4) - EXPERIMENTAL - useEffectEvent',
         label: 'Keyboard Counter EffectEvent',
         element: <KeyboardCounterEffectEvent/>,
-        notes: 'This is experimental (React 19.2 and newer)\nOnly use for non-reactive logic (that needs to see the latest value)\nValues in it shouldn\'t appear in the dependency array',
+        notes: 'This is experimental (React 19.2 and newer)\nOnly use for non-reactive logic (that needs to see the latest value)\nDo not call Effect Event functions outside of effects\nDo not store these functions in state',
         code: `import '../App.css'
 import { useEffect, useEffectEvent, useState } from 'react';
 

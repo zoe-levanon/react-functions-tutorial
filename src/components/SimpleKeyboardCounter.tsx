@@ -29,6 +29,7 @@ export const SimpleKeyboardCounter: React.FC = () => {
             </div>
             <p>Count value: {count}</p>
             <p>Use left/right arrow keys to increment/decrement</p>
+            <a href={"https://codesandbox.io/p/sandbox/pjqnl16lm7"} target={"_blank"}>.</a>
         </div>
     );
 };
