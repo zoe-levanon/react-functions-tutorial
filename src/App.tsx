@@ -42,7 +42,7 @@ function App() {
                     alignItems: 'center',
                     marginRight: '32px'
                 }}>
-                    <h4 style={{ margin: 0 }}>You Can't Avoid Closure...</h4>
+                    <h4 style={{ margin: 0 }}>You Can't Avoid Closures...</h4>
                 </div>
             </div>
             <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%', minWidth: 0 }}>
